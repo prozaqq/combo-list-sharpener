@@ -4,23 +4,32 @@ import sys
 
 def check_args(args=None):
     parser = argparse.ArgumentParser(description='A Script to check if a combo inside a combolist follows password rules.')
-    parser.add_argument('-on', '--only-numbers', type=bool, help='Can it contain only numbers ?', required=False, default=False)
-    parser.add_argument('-ol', '--only-letters', type=bool, help='Can it contain only letters ?', required=False, default=False)
-    parser.add_argument('-sc', '--special-char', type=bool, help='Does it have to contain special characters ? (!@#$%^&*())', required=False, default=True)
-    parser.add_argument('-cl', '--capital-letters', type=bool, help='Does it have to contain capital letters?', required=False, default=True)
+    parser.add_argument('-on', '--only-numbers', type=str2bool, help='Can it contain only numbers ?', required=False, default=False)
+    parser.add_argument('-ol', '--only-letters', type=str2bool, help='Can it contain only letters ?', required=False, default=False)
+    parser.add_argument('-sc', '--special-char', type=str2bool, help='Does it have to contain special characters ?', required=False, default=True)
+    parser.add_argument('-cl', '--capital-letters', type=str2bool, help='Does it have to contain capital letters?', required=False, default=True)
     parser.add_argument('-min', '--min-chars', type=int, help='Minimum characters allowed.', required=False, default=8)
     parser.add_argument('-max', '--max-chars', type=int, help='Maximum characters allowed.', required=False, default=24)
-    parser.add_argument('-file', '--file-path', type=str, help='Path of the file (if its in the same folder simply insert the filename)', required=True)
+    parser.add_argument('-f', '--file', type=str, help='Path of the file (if its in the same folder simply insert the filename)', required=True)
 
     results = parser.parse_args(args)
     return (results.only_numbers, results.only_letters, results.special_char,
-            results.special_char, results.min_chars, results.max_chars, results.file_path)
+            results.special_char, results.min_chars, results.max_chars, results.file)
 
 
 def check(password):
     if len(password) >= min_length and len(password) <= max_length:
         return True
     return False
+
+
+def str2bool(arg):
+    if arg.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif arg.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 
 
 if __name__ == "__main__":
