@@ -46,8 +46,8 @@ if __name__ == "__main__":
                     except Exception as e:
                         pass
 
-        print('[+] ' + str(loaded) + ' Accounts loaded .')
-        print('[+] ' + str(out) + ' Accounts exported according password rules .')
+        print('[+] {} Accounts loaded .'.format(loaded))
+        print('[+] {} Accounts exported according to password rules .'.format(out))
 
     except Exception as e:
         print('[!] {} \n[!] Please specify correct file name or full file path.'.format(e))
